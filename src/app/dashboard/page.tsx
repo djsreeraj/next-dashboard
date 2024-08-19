@@ -1,19 +1,19 @@
-'use-client'
+"use client"
 import { Navbar } from '@/components/Navbar/Navbar';
-import { Container, Title } from '@mantine/core';
+import { Box, Container, Title } from '@mantine/core';
+import UsersTab from '@/components/Users/UsersTab';
+import { getUsers, IUser } from '@/server/actions'
 
-export default async function Dashboard() {
+export default function Dashboard() {
 
-    // const getUsers =  async() => {
-    //     const res = await fetch('https://66bf65a342533c4031460e97.mockapi.io/users');
-    //     return res.json();
-    // }
-    // const users = await getUsers();
-
+  const users: Promise<IUser[]> =  getUsers();
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', height:'100vh' }}>
-        <Container>
+        <Container mt="lg">
             <Title order={1}>Users</Title>
+            <Box mt="lg">
+                <UsersTab users={users}/>
+            </Box>
 
         </Container>
          <Navbar />
