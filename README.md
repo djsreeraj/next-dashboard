@@ -1,7 +1,7 @@
 # Dashboard App
 
 
-This is dashboard app with CRUD operations, built using [Next.js](https://nextjs.org/) - App Router, Tanstack Query , Tanstack Table.
+This is dashboard app with CRUD operations, built using [Next.js](https://nextjs.org/) - (App Router), Mantine UI, Tanstack Query , Tanstack Table.
 
 ## Getting Started
 
