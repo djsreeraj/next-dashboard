@@ -20,29 +20,26 @@ export const getUsers =  async(): Promise<IUser[] | any>  => {
     }    
 }
 
-// export const createUser = async (data: IUser): Promise<any> => {
-//     try {
-//       const response = await fetch(`${API_BASE_URL}/users`, {
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify(data)
-//       });
+export const createUser = async (data: IUser): Promise<any> => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/users`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
   
-//       if (!response.ok) {
-//         // Throw an error with the status text if the response is not ok
-//         throw new Error(`HTTP error! Status: ${response.status}`);
-//       }
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
   
-//       // If response is ok, parse and return the JSON data
-//       return await response.json();
-//     } catch (error) {
-//       // Log or handle the error appropriately in the catch block
-//       console.error('Error creating user:', error);
-//       throw error;  // Re-throw the error if you want calling context to handle it as well
-//     }
-//   };
+      return await response.json();
+    } catch (error) {
+      console.error('Error creating user:', error);
+      throw error;
+    }
+  };
   
 //   export const editUser = async (userId: string, data: IUser): Promise<any> => {
 //     try {
