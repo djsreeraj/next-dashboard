@@ -8,8 +8,18 @@ export interface IUser {
     age: number;
     email: string;
     password: string;
-    alternate_email: string;
+    alternate_email?: string;
   }
+
+  export interface IEditUser {
+    first_name?: string;
+    last_name?: string;
+    age?: number;
+    // email: string;
+    password?: string;
+    alternate_email?: string;
+  }
+
 
 export const getUsers =  async(): Promise<IUser[] | any>  => {
     try{
@@ -19,6 +29,18 @@ export const getUsers =  async(): Promise<IUser[] | any>  => {
     }catch(e){
         return {error: e}
     }    
+}
+
+
+export const getUser =  async(id: number): Promise<IUser | any>  => {
+  try{
+      const res = await fetch(`${API_BASE_URL}/users/${id}`);
+      console.log(res.json())
+      return res.json()
+      ;
+  }catch(e){
+      return {error: e}
+  }    
 }
 
 export const createUser = async (data: IUser): Promise<any> => {
@@ -42,26 +64,26 @@ export const createUser = async (data: IUser): Promise<any> => {
     }
   };
   
-//   export const editUser = async (userId: string, data: IUser): Promise<any> => {
-//     try {
-//       const response = await fetch(`${API_BASE_URL}/users/${userId}`, {
-//         method: 'PUT',
-//         headers: {
-//           'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify(data)
-//       });
+  export const editUser = async (userId: number, data: IEditUser): Promise<any> => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/users/${userId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
   
-//       if (!response.ok) {
-//         throw new Error(`HTTP error! Status: ${response.status}`);
-//       }
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
   
-//       return await response.json();
-//     } catch (error) {
-//       console.error('Error updating user:', error);
-//       throw error; // Re-throw to allow caller to handle it further if necessary
-//     }
-//   };
+      return await response.json();
+    } catch (error) {
+      console.error('Error updating user:', error);
+      throw error; 
+    }
+  };
   
 
   export const deleteUser = async (userId: string): Promise<void> => {

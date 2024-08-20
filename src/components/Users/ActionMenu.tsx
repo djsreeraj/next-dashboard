@@ -5,7 +5,7 @@ import { IconChevronDown, IconPencil, IconTrashXFilled } from '@tabler/icons-rea
 import React from 'react'
 
 export default function ActionMenu({
-    open,
+  setEditUserId,
     rowId,
   }: any) {
 
@@ -38,8 +38,7 @@ export default function ActionMenu({
           <Menu.Item
               color="orange"
               onClick={() => {
-                // setSelectedRowId(rowId);
-                // open();
+                setEditUserId(rowId)
               }}
               leftSection={
                 <IconPencil style={{ width: rem(14), height: rem(14) }} />

@@ -11,6 +11,7 @@ import {
 import classes from './Navbar.module.css';
 import Image from 'next/image';
 import Logo from '../../../public/logo.svg';
+import Link from 'next/link';
 
 const data = [
   { link: '', label: 'Users', icon: IconUsers },
@@ -41,7 +42,9 @@ export function Navbar() {
     <nav className={classes.navbar}>
       <div className={classes.navbarMain}>
         <Group className={classes.header} mx="lg" justify="space-between">
+        <Link href="/" passHref className='cursor-pointer'>
              <Image src={Logo} alt="Logo" width={150} height={150} />
+             </Link>
         </Group>
         {links}
       </div>

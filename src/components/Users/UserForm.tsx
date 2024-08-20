@@ -1,10 +1,15 @@
+import { IUser } from '@/server/actions';
 import { Button, Group, Modal, NumberInput, Stack, TextInput } from '@mantine/core'
-import React from 'react'
+import { useQueryClient } from '@tanstack/react-query';
+import React, { useEffect, useState } from 'react'
 
-const AddUserForm = ({ isLoading, opened, close, userForm, handleSubmit  } : any) => {
+const UserForm = ({ editUserId, isLoading, opened, close, userForm, handleSubmit  } : any) => {
+  
+
   return (
+
     <Modal opened={opened} onClose={close}         
-                title={<div style={{ fontSize: '24px', fontWeight: 'bold' }}>Add New User</div>}
+                title={<div style={{ fontSize: '24px', fontWeight: 'bold' }}> {editUserId ? 'Edit User':'Add New User'}</div>}
             >
                 <form onSubmit={userForm.onSubmit(handleSubmit)}>
                 <Stack gap="sm">
@@ -25,6 +30,7 @@ const AddUserForm = ({ isLoading, opened, close, userForm, handleSubmit  } : any
                         label="Age" 
                         placeholder="Enter your age"
                         {...userForm.getInputProps("age")}
+                        max={100}
                     />
                     <TextInput 
                         label="Email" 
@@ -44,8 +50,8 @@ const AddUserForm = ({ isLoading, opened, close, userForm, handleSubmit  } : any
                     />
 
                     <Group mt="md" gap="lg" justify='center'>
-                        <Button loading={isLoading} onClick={close} size="sm" variant="light" color="indigo">Cancel</Button>
-                        <Button loading={isLoading} type="submit" size="sm" variant="filled" color="blue">Add User</Button>
+                        <Button disabled={isLoading} onClick={close} size="sm" variant="light" color="indigo">Cancel</Button>
+                        <Button loading={isLoading} type="submit" size="sm" variant="filled" color="blue">{editUserId ? 'Update User' :' Add User' }</Button>
                     </Group>
                     </Stack>
 
@@ -54,4 +60,4 @@ const AddUserForm = ({ isLoading, opened, close, userForm, handleSubmit  } : any
   )
 }
 
-export default AddUserForm
+export default UserForm

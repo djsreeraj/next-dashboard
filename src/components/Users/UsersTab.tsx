@@ -4,13 +4,18 @@ import {  flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } fr
 import PaginationControls from '../Table/PaginationControls';
 import { useUsersQuery } from '@/hooks/useUsersQuery';
 import { useEffect, useState } from 'react';
-import { columns } from './Column';
+import { useColumns } from './Column';
 
 export interface UsersTabProps {
     users?: any;
+    open: () => {};
+    close: () => {};
   }
 
-export default function UsersTab({users} : UsersTabProps) {
+interface ColProps {
+    actions?: any;
+}
+export default function UsersTab({users,setEditUserId, open, close, } : any) {
     const { data, error, isLoading } = useUsersQuery(users);
 
     const [userData, setUserData] = useState(data || null)
@@ -20,11 +25,14 @@ export default function UsersTab({users} : UsersTabProps) {
             setUserData(data?.slice().reverse())
     }, [data])
     
+    const columns = useColumns(setEditUserId, open, close);
+
     const table = useReactTable({
         data: userData,
         columns: columns,
         getCoreRowModel: getCoreRowModel(),
-        getPaginationRowModel: getPaginationRowModel()
+        getPaginationRowModel: getPaginationRowModel(),
+        columnResizeMode: "onChange"
       })
 
       if (isLoading) {
@@ -54,6 +62,7 @@ export default function UsersTab({users} : UsersTabProps) {
                             header.column.columnDef.header,
                             header.getContext()
                         )}
+                      
                     </Table.Th>
                 ))}
                 </Table.Tr>
