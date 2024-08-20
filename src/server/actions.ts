@@ -2,6 +2,7 @@
 const API_BASE_URL = "https://66bf65a342533c4031460e97.mockapi.io";
 
 export interface IUser {
+    id?:string
     first_name: string;
     last_name: string;
     age: number;
@@ -63,23 +64,23 @@ export const createUser = async (data: IUser): Promise<any> => {
 //   };
   
 
-//   export const deleteTeam = async (userId: string): Promise<void> => {
-//     try {
-//       const response = await fetch(`${API_BASE_URL}/users/${userId}`, {
-//         method: 'DELETE',
-//         headers: {
-//           'Content-Type': 'application/json'
-//         }
-//       });
+  export const deleteUser = async (userId: string): Promise<void> => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/users/${userId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
   
-//       if (!response.ok) {
-//         throw new Error(`HTTP error! Status: ${response.status}`);
-//       }
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
   
-//       console.log('Team deleted successfully');
-//     } catch (error) {
-//       console.error('Error deleting user:', error);
-//       throw error; // Re-throw to allow caller to handle it further if necessary
-//     }
-//   };
+      console.log('User deleted successfully');
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      throw error; // Re-throw to allow caller to handle it further if necessary
+    }
+  };
   

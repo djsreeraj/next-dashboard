@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createUser, getUsers, IUser } from '@/server/actions';
+import { createUser, deleteUser, getUsers, IUser } from '@/server/actions';
 import { notifications } from "@mantine/notifications";
 import { IconCheck } from "@tabler/icons-react";
 
@@ -41,6 +41,37 @@ export function useCreateUserMutation(setIsLoading : any) {
         });
   
         setIsLoading(false);
+      },
+    });
+  }
+
+  export function useDeleteUserMutation() {
+    const queryClient = useQueryClient();
+  
+    return useMutation({
+      mutationFn: (id: string) => deleteUser(id),
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["users"] }),
+          notifications.update({
+            id: "load-data",
+            color: "teal",
+            loading: false,
+            title: "Delete Success",
+            message: "User deleted successfully.",
+            icon: <IconCheck size="1rem" />,
+            autoClose: 3000,
+          });
+      },
+      onError: (error: any) => {
+        notifications.update({
+          id: "load-data",
+          color: "red",
+          loading: false,
+          title: "Failed",
+          message: error.response.data,
+          icon: <IconCheck size="1rem" />,
+          autoClose: 3000,
+        });
       },
     });
   }

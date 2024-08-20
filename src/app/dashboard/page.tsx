@@ -1,6 +1,6 @@
 "use client"
 import { Navbar } from '@/components/Navbar/Navbar';
-import { Box, Button, Modal, Container, Group, Title, TextInput, Stack, NumberInput } from '@mantine/core';
+import { Box, Button, Container, Group, Title } from '@mantine/core';
 import UsersTab from '@/components/Users/UsersTab';
 import { getUsers, IUser } from '@/server/actions'
 import { useDisclosure } from '@mantine/hooks';
@@ -8,6 +8,7 @@ import { useForm } from '@mantine/form';
 import bcrypt from 'bcryptjs';
 import { useState } from 'react';
 import { useCreateUserMutation } from '@/hooks/useUsersQuery';
+import AddUserForm from '@/components/Users/AddUserForm';
 
 export default function Dashboard() {
   const [opened, { open, close }] = useDisclosure(false);
@@ -50,6 +51,7 @@ export default function Dashboard() {
         if (!emailRegex.test(value)) {
           return "Please enter a valid email address";
         }
+        
         return null; 
       },
       alternateEmail: (value) => {
@@ -92,15 +94,17 @@ export default function Dashboard() {
     createUserMutation.mutate(data, {
         onSuccess: () => {
             close();
+            userForm.reset();
         }
     });
 
 }  
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', height:'100vh' }}>
-        <Container mt="xl">
-            <Group justify='space-between'>
+    <div style={{ display: 'flex', justifyContent: 'space-between', height:'100vh', background: '#fff' }}>
+        <Container fluid mt="xl" >
+          <Box ml="xl" w='73vw'>
+            <Group justify='space-between' style={{minWidth: "60vw"}}>
                 <Title order={1}>Users</Title>
                 <Button onClick={open}  size="sm" variant="light" color="indigo">Add User</Button>
             </Group>
@@ -108,54 +112,14 @@ export default function Dashboard() {
                 <UsersTab users={users}/>
             </Box>
 
-            <Modal opened={opened} onClose={close}         
-                title={<div style={{ fontSize: '24px', fontWeight: 'bold' }}>Add New User</div>}
-            >
-                <form onSubmit={userForm.onSubmit(handleSubmit)}>
-                <Stack gap="sm">
-                    <Group style={{ margin: '0px', padding: '0px' }}>
-                        <TextInput 
-                        label="First Name" 
-                        placeholder="Enter your first name"
-                        {...userForm.getInputProps("firstname")}
-                        />
-                        <TextInput 
-                        label="Last Name" 
-                        placeholder="Enter your last name"
-                        {...userForm.getInputProps("lastname")}
-                        />
-                    </Group>
-
-                    <NumberInput 
-                        label="Age" 
-                        placeholder="Enter your age"
-                        {...userForm.getInputProps("age")}
-                    />
-                    <TextInput 
-                        label="Email" 
-                        placeholder="Enter your email address"
-                        {...userForm.getInputProps("email")}
-                    />
-                    <TextInput 
-                        label="Alternate Email" 
-                        placeholder="Enter an alternate email address (Optional)"
-                        {...userForm.getInputProps("alternateEmail")}  // Ensure correct key casing
-                    />
-                    <TextInput 
-                        label="Password" 
-                        placeholder="Enter your password"
-                        {...userForm.getInputProps("password")}
-                    />
-
-                    <Group mt="md" gap="lg" justify='center'>
-                        <Button loading={isLoading} onClick={close} size="sm" variant="light" color="indigo">Cancel</Button>
-                        <Button loading={isLoading} type="submit" size="sm" variant="filled" color="blue">Add User</Button>
-                    </Group>
-                    </Stack>
-
-                </form>
-            </Modal>
-
+            <AddUserForm            
+              isLoading={isLoading}
+              opened={opened}
+              close={close}
+              userForm={userForm}
+              handleSubmit={handleSubmit}
+            />
+          </Box>
         </Container>
          <Navbar />
 

@@ -46,14 +46,14 @@ const PaginationControls = ({ table } : any) => {
     {'>>'}
 </Button>
 
-<Group gap="xs" align="center">
+{/* <Group gap="xs" align="center">
     <Text c="dimmed">Page</Text>
     <Text w={500} c="dimmed">
         {table.getState().pagination.pageIndex + 1} of {table.getPageCount().toLocaleString()}
     </Text>
-</Group>
+</Group> */}
 </>
-
+{/* 
             <Box ml="xl">
                 <select 
                 value={table.getState().pagination.pageSize}
@@ -67,7 +67,7 @@ const PaginationControls = ({ table } : any) => {
                     </option>
                 ))}
                 </select>
-            </Box>
+            </Box> */}
             
            
         </Group>

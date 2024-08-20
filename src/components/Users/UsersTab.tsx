@@ -1,72 +1,46 @@
 "use-client";
-import { IUser } from '@/server/actions'
 import {  Loader, Paper, ScrollArea, Stack, Table, Text } from '@mantine/core';
-import { createColumnHelper, flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table';
+import {  flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table';
 import PaginationControls from '../Table/PaginationControls';
 import { useUsersQuery } from '@/hooks/useUsersQuery';
+import { useEffect, useState } from 'react';
+import { columns } from './Column';
 
 export interface UsersTabProps {
     users?: any;
   }
 
-  const columnHelper = createColumnHelper<IUser>()
-
-    const columns = [
-        columnHelper.accessor('first_name', {
-            cell: info => info.getValue(),
-            footer: info => info.column.id,
-            header: () => <span>First Name</span>,
-        }),
-        columnHelper.accessor(row => row.last_name, {
-            id: 'lastName',
-            cell: info => <i>{info.getValue()}</i>,
-            header: () => <span>Last Name</span>,
-            footer: info => info.column.id,
-        }),
-    
-        columnHelper.accessor('email', {
-            header: 'Email',
-            footer: info => info.column.id,
-        }),
-        columnHelper.accessor('alternate_email', {
-            header: 'Alternate Email',
-            footer: info => info.column.id,
-        }),
-
-        columnHelper.accessor('password', {
-            header: () => <span>Password</span>,
-            footer: info => info.column.id,
-             cell: info => `${info.getValue().substring(0, 3)}...`,
-        }),
-    
-        columnHelper.accessor('age', {
-            header: () => 'Age',
-            cell: info => info.renderValue(),
-            footer: info => info.column.id,
-        }),
-        ]
-
 export default function UsersTab({users} : UsersTabProps) {
     const { data, error, isLoading } = useUsersQuery(users);
+
+    const [userData, setUserData] = useState(data || null)
+
+    useEffect(() => {
+        if(data?.length > 0 )
+            setUserData(data?.slice().reverse())
+    }, [data])
+    
     const table = useReactTable({
-        data: data?.length > 0 ? [...data]?.reverse() : data,
-        columns,
+        data: userData,
+        columns: columns,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel()
       })
 
-    if(isLoading || data.length < 1 || !table) <Loader color="indigo" type="bars" />
-
+      if (isLoading) {
+        return <Loader color="indigo" type="bars" />;
+    }
+    
     if(error) <h2>{error.message}</h2>
 
-    if(data) return (
-        <Paper shadow="md" p="md">
+    if(userData) return (
+        <Paper shadow="md" ml={"lg"} p="md" w='70vw' style={{ minWidth: '80%', overflow: 'hidden'}}>
 
-        <ScrollArea h='80vh'>
-            <Stack   h='80vh'    justify="space-between"
+        <ScrollArea h='80vh' w='70vw' >
+            <Stack   h='80vh' w='70vw'   justify="space-between"
             >
                 {
-                    !data || data.length < 1 && <Text>No data available!</Text>
+                    !userData || userData?.length < 1 && <Text>No data available!</Text>
                 }
           <Table stickyHeader striped highlightOnHover  withColumnBorders horizontalSpacing="sm">
             <Table.Thead>
