@@ -5,15 +5,15 @@ export enum Priority {
   }
   
   export enum Status {
-    NotStarted = "Not started",
-    InProgress = "In progress",
+    NotStarted = "NotStarted",
+    InProgress = "InProgress",
     Done = "Done",
   }
 
   export enum TaskType {
     Improvement = "Improvement",
     Bug = "Bug",
-    NewFeature = "New Feature",
+    NewFeature = "NewFeature",
   }
   
   // export interface Task {
