@@ -30,9 +30,9 @@ const Todo = () => {
   const [sortOrder, setSortOrder] = useState<string>('asc');
   const [sortedData, setSortedData] = useState<MTask[]>(mTaskData);
 
-  useEffect(() => {
-    console.log(filteredData)
-  }, [filteredData])
+  // useEffect(() => {
+  //   console.log(filteredData)
+  // }, [filteredData])
   
   function handleFilter() {
     let filtered: MTask[] = mTaskData;
@@ -62,9 +62,9 @@ const Todo = () => {
         default:
           filtered = mTaskData.filter(
             (task) =>{
-              console.log(task)
-              console.log(selectedProperty)
-              console.log(selectedProperty)
+              // console.log(task)
+              // console.log(selectedProperty)
+              // console.log(selectedProperty)
 
              return task[selectedProperty as keyof MTask]
               ?.toString()
