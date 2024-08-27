@@ -46,7 +46,7 @@ export default function Home() {
 
       </div>
 
-      <div className="mb-32 flex align-center justify-center text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
+      <div className="mb-32 gap-5 flex align-center justify-center text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
        
 
       <Link href="/dashboard" passHref>
@@ -63,6 +63,24 @@ export default function Home() {
           </h2>
           <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
           Go to Dashboard
+          </p>
+        </div>
+      </Link>
+
+      <Link href="/todo" passHref >
+        <div
+          className="group rounded-lg border bg-gray-100 border-gray-300 px-5 py-4 transition-colors 
+          hover:border-gray-400 hover:bg-gray-200 "
+          rel="noopener noreferrer"
+        >
+          <h2 className="mb-3 text-2xl font-semibold">
+            To Do manager{" "}
+            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
+              -&gt;
+            </span>
+          </h2>
+          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
+          Todo
           </p>
         </div>
       </Link>
