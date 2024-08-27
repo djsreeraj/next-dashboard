@@ -4,24 +4,22 @@ import {  flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowMode
 import { useEffect, useState } from 'react';
 import { mTaskData } from '@/constants/data';
 import { useColumns } from './Column';
+import { MTask } from '@/types/task';
 
 
-export default function Tasks({isSort} : {isSort: boolean}) {
+export default function Tasks({isSort, filteredData} : {isSort: boolean, filteredData: MTask[]}) {
     
     const columns = useColumns();
-    const [filtering, setFiltering] = useState('')
-    const [columnFilters, setColumnFilters] = useState([]);
-
-    const [taskData, setTaskData] = useState(mTaskData)
+    const [taskData, setTaskData] = useState(filteredData)
 
 
     useEffect(() => {
       if(isSort){
-        setTaskData([...mTaskData].reverse())
+        setTaskData([...filteredData].reverse())
       }else{
-        setTaskData([...mTaskData])
+        setTaskData([...filteredData])
       }
-    }, [isSort])
+    }, [isSort,filteredData])
     
     const table = useReactTable({
         data: taskData,
@@ -29,9 +27,9 @@ export default function Tasks({isSort} : {isSort: boolean}) {
         getCoreRowModel: getCoreRowModel(),
         // getPaginationRowModel: getPaginationRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
-        state: {
-            columnFilters,
-        },
+        // state: {
+        //     columnFilters,
+        // },
         // onColumnFiltersChange: setColumnFilters,
         
       })
